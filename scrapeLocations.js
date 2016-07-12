@@ -14,7 +14,7 @@ function iterNodelist(nodeList, f) {
 var stops = [];
 
 function printStops() {
-    console.log(JSON.stringify(stops, null, ' '));
+    console.log(JSON.stringify(stops, null, '  '));
 }
 
 function scrapeBody(body) {
@@ -29,13 +29,13 @@ function scrapeBody(body) {
         var latTag = elem.getElementsByTagName("latitude")[0];
 
         var name = nameTag.textContent;
-        stop.name = name;
+        stop.Name = name;
 
         if (latTag && longTag) {
             var lat = latTag.textContent;
             var long = longTag.textContent;
-            stop.lat = parseFloat(lat);
-            stop.long = parseFloat(long);
+            stop.Latitude = parseFloat(lat);
+            stop.Longitude = parseFloat(long);
         } else {
             var coordsTag = elem.getElementsByTagName("coordinates")[0];
             var coordsStr = coordsTag.textContent;
@@ -49,8 +49,8 @@ function scrapeBody(body) {
             var lat = coordsStr.substring(0,i);
             lat = parseFloat(lat);
 
-            stop.lat = lat;
-            stop.long = long;
+            stop.Latitude = lat;
+            stop.Longitude = long;
         }
 
         stops.push(stop);
@@ -59,9 +59,9 @@ function scrapeBody(body) {
 
 request(stopUrls[0], function(err, res, body){
     if (!err && res.statusCode == 200) scrapeBody(body);
-    request(stopUrls[0], function(err, res, body){
+    request(stopUrls[1], function(err, res, body){
         if (!err && res.statusCode == 200) scrapeBody(body);
-        request(stopUrls[0], function(err, res, body){
+        request(stopUrls[2], function(err, res, body){
             if (!err && res.statusCode == 200) scrapeBody(body);
             printStops();
         });
